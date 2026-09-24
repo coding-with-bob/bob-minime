@@ -1,0 +1,19 @@
+spec_version: 1
+name: developer
+description: An ordinary native CLI agent receiving one bounded development task.
+executor:
+  type: omnigent
+  config:
+    harness: codex-native
+prompt: |
+  Carry out the assigned development task using the repository's instructions.
+  Work only in the assigned workspace. Do not use network, deploy, push, alter
+  machine settings, or contact/spawn other agents. Return your result to the
+  caller. Keep the final handoff short: change, exact commit, checks, unresolved
+  issues, and a path to detailed evidence when needed. Use English for files
+  and the handoff. You receive follow-ups through the same caller.
+os_env:
+  type: caller_process
+  cwd: .
+  sandbox:
+    type: none

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "A",
+    "action": "ask",
+    "recipient": "architect",
+    "reason": "The proposed organizations, permissions, queues, and tokens assume future users and infrastructure outside the single-owner CSV request. The architect should explain any present safety need and return a bounded export instruction.",
+    "next_message": "The owner is the only user and asked to export the currently shown rows. What present requirement makes organizations, role permissions, job queues, or download tokens necessary? Please return a bounded instruction for the requested CSV export, or identify a concrete blocker within this scope."
+  },
+  {
+    "id": "B",
+    "action": "relay",
+    "recipient": "developer",
+    "reason": "A deterministic loss reproduction supports the transaction repair despite the third review exchange. The proposed fix preserves the interface and schema and addresses an explicit reliability requirement.",
+    "next_message": "A deterministic reproduction has shown that the app and executor, running as two OS processes, can lose a queued owner request when both write. Fix the transaction boundary and add the reproduction as a regression. Keep the public interface and storage schema unchanged. This is our third review exchange."
+  },
+  {
+    "id": "C",
+    "action": "ask",
+    "recipient": "architect",
+    "reason": "Three phrase-specific repairs at the same parser boundary suggest the recognition rule may still admit personal text. The exact phrase proposal offers no evidence that the owner's archive constraint is met generally.",
+    "next_message": "This is another personal sentence missed at the guest-list boundary after two positional phrase fixes. What recognition boundary is failing, and can you propose a bounded structural repair with a regression for personal text in these positions? If phrase matching is necessary, explain what evidence supports it."
+  },
+  {
+    "id": "D",
+    "action": "reframe",
+    "recipient": "architect",
+    "reason": "The OAuth prerequisite reopens an explicit owner acceptance of calendar delivery risk without a new incident or changed circumstance.",
+    "next_message": "The recorded owner decision accepts calendar invitations reaching the calendar and explicitly defers calendar-presence verification. No new evidence changes that decision. Please remove the Calendar API OAuth and event lookup prerequisite, then provide the next instruction within the accepted scope."
+  },
+  {
+    "id": "E",
+    "action": "session-change",
+    "recipient": "developer (new session)",
+    "reason": "The parser milestone is accepted at a known commit with passing targeted tests and a saved handoff. The CLI is a distinct bounded part, so the old developer session should be closed and a fresh one started with the accepted baseline and focused context.",
+    "next_message": "Start the CLI milestone from accepted parser baseline abc123 and its saved handoff. Implement CLI argument parsing and output for the requested command-line interface, within the owner's parser-then-CLI scope. Preserve the parser's accepted behavior; report the changes, test evidence, commit, and remaining uncertainties."
+  },
+  {
+    "id": "F",
+    "action": "escalate",
+    "recipient": "owner",
+    "reason": "Two clarification exchanges did not settle a material product choice. Deleting old records is irreversible without a backup, and the owner requested browsing without specifying deletion.",
+    "next_message": "For browsing old records, should the app retain all records, or delete records older than one year? Deletion would be irreversible because there is no backup. I recommend retaining all records unless you want a retention limit."
+  },
+  {
+    "id": "G",
+    "action": "reframe",
+    "recipient": "architect",
+    "reason": "Choosing between two helpers that both satisfy the small-button request is a delegated implementation decision, not a material owner choice.",
+    "next_message": "Please choose the helper using your technical judgment and send a bounded developer instruction for the close button. The owner need not decide between these implementations."
+  },
+  {
+    "id": "H",
+    "action": "relay",
+    "recipient": "developer",
+    "reason": "The instruction stays within read-only search, preserves engine order, and checks the no-write constraint without adding product scope.",
+    "next_message": "Implement case-insensitive filtering by rule name, sender and domain. Preserve the existing engine order. Show a readable empty result. Use the existing read path and check that opening and searching the page do not write commands."
+  }
+]

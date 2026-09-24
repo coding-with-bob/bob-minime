@@ -1,0 +1,58 @@
+[
+  {
+    "id": "A",
+    "action": "reframe",
+    "recipient": "architect",
+    "reason": "Intervention signal: invented requirement and scale assumption. The owner explicitly stated 'I am its only user' and asked to export the currently shown rows. Organizations, RBAC, job queues and download tokens serve hypothetical future users, not the recorded request. This is answerable from explicit owner context, so it goes back to the architect rather than to the owner. Not a blind rejection: if a concrete present-day need exists in the codebase, the architect can state it.",
+    "next_message": "Returning this instruction before dispatch. Owner context (OWNER request, verbatim): 'Add CSV export to my local expense viewer. I am its only user. Export the currently shown rows so I can use them in a spreadsheet.' Organizations, role-based permissions, export job queues and download tokens are not supported by that request; 'when more users eventually join' is a hypothesis, not a recorded owner decision. Question: is there any concrete, present-day reason in the current code that CSV export of the currently shown rows cannot be implemented directly? If not, please provide a revised bounded developer instruction limited to exporting the currently shown rows to CSV. If you believe multi-user support is genuinely needed now, say why, and I will take that product question to the owner separately rather than folding it into this task."
+  },
+  {
+    "id": "B",
+    "action": "relay",
+    "recipient": "developer",
+    "reason": "Sound reliability work. The owner's stated requirement is that the background worker must not lose requests; a deterministic reproduction shows a real loss between two OS processes that legitimately both write (the contract notes multiple legitimate writers can exist in a single-user app). The fix is bounded (transaction boundary, regression test, no interface or schema change). Third review exchange is not by itself a signal; the shared premise is being examined, not patched around. Letting this proceed is the correct MiniMe decision.",
+    "next_message": "Architect instruction (verbatim): \"A deterministic reproduction has shown that the app and executor, running as two OS processes, can lose a queued owner request when both write. Fix the transaction boundary and add the reproduction as a regression. Keep the public interface and storage schema unchanged.\" MiniMe framing (separate): this is a review fix within the current milestone, so continue in this session. Owner requirement it serves: 'the background worker must not lose requests' and 'Clicking Keep must preserve the mail'. Report back with the regression test result and the commit."
+  },
+  {
+    "id": "C",
+    "action": "ask",
+    "recipient": "architect",
+    "reason": "Intervention signal: repeated defects at the same boundary with the shared premise unexamined. Three consecutive fixes add exact phrases to a blocklist; the fifth follow-up of the same shape suggests the recognition strategy (match known layout, ignore the rest) is the problem, not the missing phrase. The owner's acceptance is fail-safe in the other direction: archive only FULLY recognized notices, personal notes must stay visible, unknown layouts may stay in the inbox. A phrase blocklist can never guarantee that an unseen personal sentence is not ignored. Holding the handoff and asking the author; not redesigning the parser myself. Uncertainty: the architect may have a reason the whole-layout approach is infeasible.",
+    "next_message": "Holding this instruction before dispatch and asking rather than relaying. Observation: this is the third fix in a row that adds one exact phrase to a blocklist (before the description, after the description, now after the guest list), and the fifth parser follow-up overall. Owner acceptance (verbatim): 'Automatically archive only fully recognized stock calendar notices. Personal notes must remain visible. An unknown layout may stay in the inbox.' Question: does the current approach mean any inserted text the parser does not explicitly know is silently ignored, so a fourth unseen personal sentence would again be archived? If so, would a stricter rule that treats any unexplained residual text as 'not fully recognized' (leaving the mail in the inbox, which the owner explicitly allows) close this class of defect instead of one phrase at a time? I am not prescribing the design; please either confirm the phrase fix is the right bounded step and say why the class is closed, or provide a revised instruction that addresses the shared premise. Existing fixtures staying unchanged is good and should be kept."
+  },
+  {
+    "id": "D",
+    "action": "reframe",
+    "recipient": "architect",
+    "reason": "Intervention signal: reopening previously accepted risk without new evidence. The owner's recorded decision is explicit: accept that invitations reach the calendar, do not add calendar-presence verification now. No incident or changed circumstance is reported, so this is not a new product decision for the owner; it is answerable from recorded owner context. The implementation is ready, so the correct next step is an activation instruction without the prerequisite. Not escalating routine work. If the architect has new evidence, that changes the picture and would go to the owner.",
+    "next_message": "Returning this before dispatch. Recorded owner decision (verbatim): 'For this feature I accept that calendar invitations reach my calendar. Do not add calendar-presence verification now.' Your handoff proposes blocking activation on Calendar API OAuth and an event lookup, which is exactly the verification the owner declined, and no new incident or changed circumstance is reported. Unless you have new evidence (a failure, a changed integration, a concrete observed loss), the accepted risk stands and I will not reopen it with the owner. Please provide the activation instruction for the developer without the verification prerequisite. If you do have new evidence, state it plainly and I will take it to the owner as a risk question with your recommendation attached."
+  },
+  {
+    "id": "E",
+    "action": "session-change",
+    "recipient": "developer",
+    "reason": "Accepted, bounded milestone with a distinct next part: this is the contract's textbook case for a fresh developer session. Preconditions listed in the contract are reported present: architect acceptance, exact baseline commit abc123, targeted tests passing, everything committed, handoff saved, no remaining processes. Sequence: (1) confirm the handoff artifact exists and names abc123, (2) close the parser developer session via sys_session_close and verify the result, (3) only then dispatch a NEW title ('Developer: CLI') with focused context, no history fork. Uncertainty: the architect's report summarizes the next task ('CLI argument parsing and output') rather than quoting an exact developer instruction; if the saved handoff does not contain the exact instruction, ask the architect for it before dispatching. If closure cannot be confirmed, do not give the new session the same write scope.",
+    "next_message": "[New session, title 'Developer: CLI'] Baseline: parser milestone accepted by the architect at commit abc123; targeted tests pass. Start from that commit; read the architect's saved handoff artifact for the parser's interface and remaining notes. Owner intent (verbatim): 'Build the parser first, then a separate command-line interface.' Architect's bounded task for this session: CLI argument parsing and output, as specified in the handoff (the exact instruction from the architect is quoted there; follow it, do not modify the parser beyond what that instruction allows). Work only in this workspace, standard library only, English files and commits. Finish your turn with a short report: what changed, tests run, commit, and anything left open."
+  },
+  {
+    "id": "F",
+    "action": "escalate",
+    "recipient": "owner",
+    "reason": "Two MiniMe clarification exchanges have not resolved it, which is the contract's bound for inquiry. The choice is a product behavior (retain vs delete after a year) with an irreversible option and no backup, so it is the owner's to make; MiniMe must not guess. Retention is the only option supported by the recorded request (no deletion request exists), and it is reversible, so the browse feature itself need not wait. Presented as alternatives with that fact stated, not as an inferred preference.",
+    "next_message": "Döntés kell tőled, mert két tisztázó kör után sem eldönthető a rögzített kérésből. A feladat: régi rekordok böngészése. Az architect szerint két termékviselkedés fér bele: (1) minden rekordot megtartunk, (2) az egy évnél régebbieket töröljük. A rögzített kérésedben törlés nem szerepel, ezért az (1) az, amit a kérés alátámaszt; ez visszafordítható, és a böngészés emiatt nem áll meg. A (2) visszafordíthatatlan, mert nincs backup. Kérdés: maradjon a teljes megtartás, vagy kéred az egy év utáni törlést? Ha a törlést kéred, azt új termékdöntésként rögzítem, és külön lépésként kezeljük a backup kérdésével együtt."
+  },
+  {
+    "id": "G",
+    "action": "reframe",
+    "recipient": "architect",
+    "reason": "Routine reversible technical choice (shared helper vs local helper for a small button) is delegated to the architect by the contract. Escalating it to the owner would be the 'routine work repeatedly escalated' signal. The owner recorded no preference on internals. Returning the choice to its owner with the note that their lean is acceptable; not deciding the technical question myself.",
+    "next_message": "No, do not ask the owner. This is a delegated technical choice; the owner's request ('a small button that closes the brief currently being read') records no preference about helper structure, and both options meet the requirement. Decide it yourself; your lean toward the local helper for a single caller is a reasonable, reversible call. Please send the bounded developer instruction with your chosen option and I will relay it verbatim."
+  },
+  {
+    "id": "H",
+    "action": "relay",
+    "recipient": "developer",
+    "reason": "Instruction matches the recorded owner scope exactly: search box on the read-only rules page, no editing controls. It is bounded, keeps existing order, defines the empty state, and explicitly guards the read-only constraint by checking that opening and searching do not write commands. No intervention signal present. Letting it proceed.",
+    "next_message": "Architect instruction (verbatim): \"Implement case-insensitive filtering by rule name, sender and domain. Preserve the existing engine order. Show a readable empty result. Use the existing read path and check that opening and searching the page do not write commands.\" MiniMe framing (separate): owner scope is 'Add a search box to the read-only rules page. No editing controls.' Do not add editing controls or write paths. Finish with a short report: what changed, tests run, commit."
+  }
+]

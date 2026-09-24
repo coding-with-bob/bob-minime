@@ -1,0 +1,82 @@
+[
+  {
+    "session_id": "session-17",
+    "archived": true,
+    "runner_online": false,
+    "status": "idle",
+    "captured_terminal_count": 1,
+    "live_captured_terminals": 0
+  },
+  {
+    "session_id": "session-21",
+    "archived": true,
+    "runner_online": false,
+    "status": "idle",
+    "captured_terminal_count": 1,
+    "live_captured_terminals": 0
+  },
+  {
+    "session_id": "session-02",
+    "archived": true,
+    "runner_online": false,
+    "status": "idle",
+    "captured_terminal_count": 1,
+    "live_captured_terminals": 0
+  },
+  {
+    "session_id": "session-08",
+    "archived": true,
+    "runner_online": false,
+    "status": "idle",
+    "captured_terminal_count": 1,
+    "live_captured_terminals": 0
+  },
+  {
+    "session_id": "session-06",
+    "archived": true,
+    "runner_online": false,
+    "status": "idle",
+    "captured_terminal_count": 1,
+    "live_captured_terminals": 0
+  },
+  {
+    "session_id": "session-19",
+    "archived": true,
+    "runner_online": false,
+    "status": "idle",
+    "captured_terminal_count": 1,
+    "live_captured_terminals": 0
+  },
+  {
+    "session_id": "session-04",
+    "archived": true,
+    "runner_online": false,
+    "status": "idle",
+    "captured_terminal_count": 1,
+    "live_captured_terminals": 0
+  },
+  {
+    "session_id": "session-15",
+    "archived": true,
+    "runner_online": false,
+    "status": "idle",
+    "captured_terminal_count": 1,
+    "live_captured_terminals": 0
+  },
+  {
+    "session_id": "session-11",
+    "archived": true,
+    "runner_online": false,
+    "status": "idle",
+    "captured_terminal_count": 1,
+    "live_captured_terminals": 0
+  },
+  {
+    "session_id": "session-12",
+    "archived": true,
+    "runner_online": false,
+    "status": "idle",
+    "captured_terminal_count": 1,
+    "live_captured_terminals": 0
+  }
+]
