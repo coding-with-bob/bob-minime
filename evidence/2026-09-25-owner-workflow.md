@@ -89,6 +89,19 @@ The observed state persists well beyond that grace period. The precise cause
 in the running installation remains unverified. No cleanup patch or runtime
 restart was performed as part of this audit.
 
+Follow-up clarification: the running trial's log confirms that the native-pane
+idle reaper started with a 3,600-second timeout and 60-second scan interval.
+The code preserves active turns, attached terminal clients, pending approval
+and recently producing panes. For an open conversation, a subsequent message
+re-creates the pane and attempts to resume the native CLI's saved conversation;
+the server transcript remains preserved. This mechanism is distinct from the
+archive stop, whose intended grace is eight seconds. A child marked
+`omnigent.closed=true` rejects new user messages and is not an ordinary resumable
+idle conversation. The retained processes therefore establish a prompt-close
+cleanup discrepancy, not an unbounded process leak; eventual idle cleanup was
+not yet observed. No urgent workflow blocker or need for a new cleanup mechanism
+is established by this audit.
+
 ## Interpretation
 
 The run supports automatic message delivery, exact relay, separate technical
