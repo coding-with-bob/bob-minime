@@ -12,5 +12,10 @@ Do not access email, production stores, deploy, push, contact anyone, or change
 machine-wide configuration as part of maintaining this bundle. Reuse existing
 local model authentication. Do not copy credentials into evidence.
 
+Keep personal contact details, machine-specific absolute paths, and live runtime
+identifiers out of tracked evidence. Preserve relationships with aliases, label
+anonymization, and keep originals private. Check Git authorship metadata as well
+as file contents before publication.
+
 Distinguish a controlled protocol exercise, an authored judgment probe,
 and observed performance on a real task. Passing one does not prove the others.
