@@ -25,11 +25,14 @@ both model IDs and their `high` effort option. The bundle parses with these
 settings. An actual Astra/Astra/Sol workflow is recorded in the
 [Codex wake validation](evidence/2026-09-25-codex-wake.md).
 
-**Runtime prerequisite:** the owner's normal Omnigent checkout at `394fa67b8`
-suppresses the child-completion wake for a Codex-native parent. The targeted fix
-is [upstream PR #8282](https://github.com/omnigent-ai/omnigent/pull/8282), developed
-and tested on a separate server/host. The normal server has not been upgraded.
-Use a runtime containing that fix for autonomous all-Codex workflows. The earlier
+**Runtime prerequisite:** autonomous all-Codex workflows need the parent-wake
+fix in [upstream PR #8282](https://github.com/omnigent-ai/omnigent/pull/8282).
+It is now installed locally as commit `e6f6d1c45` on branch
+`local/codex-parent-wake` of the normal Omnigent checkout, over base `394fa67b8`.
+The local host on localhost:6767 was restarted and its automatic wake verified;
+the server did not need a restart. Read that checkout's ignored
+`LOCAL-OVERRIDES.md` before an upgrade so the pending patch is retained.
+The earlier
 [pilot](evidence/2026-09-25-pilot.md) used a Claude-native MiniMe; its results and
 the original Codex failure remain historical evidence. Judgment-only runs do
 not dispatch children and avoid this limitation.
@@ -45,13 +48,14 @@ global configuration or grant additional shell permissions.
 ## Run
 
 ```sh
-python3 scripts/experiment.py start --server http://127.0.0.1:PORT --approve-communication
+python3 scripts/experiment.py start --approve-communication
 python3 scripts/experiment.py status .runs/RUN/run.json
 python3 scripts/experiment.py capture .runs/RUN/run.json
 python3 scripts/experiment.py stop .runs/RUN/run.json
 ```
 
-Replace `PORT` with a running server backed by the fixed Omnigent runtime.
+The default server is localhost:6767, now using the locally patched host.
+To target a separate fixed runtime, add `--server http://127.0.0.1:PORT`.
 `start` uploads the bundle and creates
 a uniquely named Omnigent session; it prints the exact run path and session URL.
 Open that URL in Omnigent. **Agents** exposes the architect/developer sessions;

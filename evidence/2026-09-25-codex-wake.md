@@ -13,8 +13,9 @@ PR: [#8282](https://github.com/omnigent-ai/omnigent/pull/8282).
 The fix lives in the separate `fix/codex-parent-subagent-wake` branch/worktree,
 based on upstream `ed0f29cb6`; final commit `504e71b09`.
 
-The owner's normal checkout at `394fa67b8` and server/host on localhost:6767
-were not upgraded or restarted. A separate server on localhost:50022, host,
+During this isolated trial, the owner's normal checkout at `394fa67b8` and
+server/host on localhost:6767 were not upgraded or restarted. A separate server
+on localhost:50022, host,
 database and private config directory were used for the trial. Existing local
 model authentication was reused; no global permissions or model settings changed.
 
@@ -120,3 +121,31 @@ typing another message. Expect a same-developer repair, an accepted milestone,
 closure, a new developer, final review and child cleanup. **Agents** shows the
 sessions and **Shells** their native CLI terminals. Capture and stop only the
 new run using the launcher commands; do not restart the normal server for a trial.
+
+## Subsequent owner-authorized local installation
+
+After the isolated trial, the owner explicitly requested using the patch in the
+normal local Omnigent install. The existing editable checkout now uses branch
+`local/codex-parent-wake`, commit `e6f6d1c45`, one backported commit above
+`394fa67b8`. The local `main` stayed unchanged. The two patched files are identical
+to the upstream PR; no unrelated upstream changes, dependencies or assets were
+installed. All 128 focused tests and the pre-commit checks passed on this older
+local base as well.
+
+There were no active sessions. Only the local host restarted;
+the server kept its original process on localhost:6767. Machine-local upgrade and
+rollback context is in the Omnigent checkout's `LOCAL-OVERRIDES.md`, ignored
+through `.git/info/exclude`. A later upgrade must preserve the patch or verify
+that upstream includes its equivalent before dropping it.
+
+Installed-runtime smoke: `run-05`, root
+`session-23`, child
+`session-01`. Both used Astra high. The child returned the
+requested `ARCHITECT_WAKE_OK`; one automatic completion notice woke the parent,
+which read the inbox once, confirmed the exact result, closed the child and
+reported `LOCAL_CODEX_WAKE_OK`. No developer or implementation was part of this
+small check, and no operator relay or extra wake was sent.
+
+Both smoke sessions were stopped/archived after capture. Their terminal handles
+were gone and runners offline; the normal server and restarted host remain
+running. The README's default launcher target is usable with this local patch.
