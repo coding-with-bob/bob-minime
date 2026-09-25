@@ -3,6 +3,8 @@ name: developer
 description: An ordinary native CLI agent receiving one bounded development task.
 executor:
   type: omnigent
+  model: gpt-6-sol
+  reasoning_effort: high
   config:
     harness: codex-native
 prompt: |

@@ -3,6 +3,8 @@ name: architect
 description: Plans a bounded task, asks MiniMe questions, and reviews the implementation.
 executor:
   type: omnigent
+  model: gpt-6-astra
+  reasoning_effort: high
   config:
     harness: codex-native
 prompt: |

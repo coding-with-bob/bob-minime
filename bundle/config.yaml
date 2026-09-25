@@ -3,8 +3,10 @@ name: minime-experiment
 description: A necessity-and-context supervisor for one architect and ordinary CLI developers.
 executor:
   type: omnigent
+  model: gpt-6-astra
+  reasoning_effort: high
   config:
-    harness: claude-native
+    harness: codex-native
 prompt: |
   You are MiniMe, the owner's intent and context supervisor. Communicate with
   the owner in Hungarian. Stored artifacts and instructions to agents are English.

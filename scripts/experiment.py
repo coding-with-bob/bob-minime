@@ -19,7 +19,7 @@ COMMUNICATION_TOOLS = ('sys_session_send', 'sys_read_inbox',
                        'sys_session_get_history', 'sys_session_close')
 
 
-def launch_args(harness='claude-native', approve_communication=False):
+def launch_args(harness='codex-native', approve_communication=False):
     if harness == 'claude-native':
         return (['--allowedTools', ','.join('mcp__omnigent__' + tool
                                           for tool in COMMUNICATION_TOOLS)]
@@ -54,7 +54,9 @@ def save(path, value):
     temp.replace(path)
 
 
-def archive_bundle(name, harness='claude-native'):
+def archive_bundle(name, harness='codex-native'):
+    if harness != 'codex-native':
+        raise ValueError('The pinned Astra/Sol bundle requires codex-native')
     output = io.BytesIO()
     with tarfile.open(fileobj=output, mode='w:gz') as archive:
         for source in sorted((ROOT / 'bundle').rglob('*')):
@@ -64,7 +66,6 @@ def archive_bundle(name, harness='claude-native'):
             data = source.read_bytes()
             if str(relative) == 'config.yaml':
                 data = re.sub(rb'(?m)^name: .*$', f'name: {name}'.encode(), data, count=1)
-                data = re.sub(rb'(?m)^    harness: .*$', f'    harness: {harness}'.encode(), data, count=1)
             info = tarfile.TarInfo(str(relative))
             info.size, info.mode = len(data), 0o644
             archive.addfile(info, io.BytesIO(data))
@@ -209,7 +210,7 @@ def main():
     launch = sub.add_parser('start')
     launch.add_argument('--server', default='http://127.0.0.1:6767')
     launch.add_argument('--fixture')
-    launch.add_argument('--harness', choices=['codex-native', 'claude-native'], default='claude-native')
+    launch.add_argument('--harness', choices=['codex-native'], default='codex-native')
     launch.add_argument('--approve-communication', action='store_true',
                         help='Use only with owner authorization: preapprove four session tools')
     for name in ('status', 'capture', 'stop'):
