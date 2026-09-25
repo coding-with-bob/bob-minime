@@ -1,7 +1,7 @@
 # MiniMe: conversation and delegated development
 
-An owner-facing intent supervisor mediates a persistent architect and ordinary
-native CLI developers. It checks necessity, context, progress, and session
+An owner-facing intent supervisor mediates a persistent architect and an ordinary
+native CLI developer for each deliverable. It checks necessity, context, progress, and session
 boundaries while the architect performs technical review.
 
 Start a conversation without a task file or selected project. Discuss the idea,
@@ -66,13 +66,24 @@ architect and developer all support the main-pane **Chat / Terminal** switch.
 The native UI labels are presentation metadata; they do not replace the custom
 MiniMe agent or its prompt with a stock Codex agent.
 
-Each conversation has a private, ignored `.sessions/ID/workspace/` for its notes
+Each conversation has a private, ignored `.sessions/ID/workspace/` for relay notes
 and a `session.json` beside it. It is not an implementation repository. Choose
 the actual repository during the conversation; MiniMe passes its absolute path
 and instructions to the children. Permission limits still apply: a denied
 project access is surfaced, not bypassed. Launching a conversation grants no
 permission to modify an arbitrary repository. Existing sessions retain their
 uploaded prompts; use a new session for an updated bundle.
+
+Once the project is known, MiniMe discovers its own planning and completion
+process. The canonical task/plan and final acceptance live in the owning repo;
+`.minime/` keeps references and session state. The architect does technical review
+and records final acceptance in the project. Executable deployment/check scripts
+and tests belong in the project too; private output remains outside tracked files.
+
+The same architect and developer normally continue through internal milestones,
+review fixes and authorized release. Waiting for an owner answer does not close
+them or authorize more work. Replacement needs a concrete reason; completion of
+the agreed deliverable closes the children, not the owner's conversation.
 
 The launcher is the reliable entry point and requires no server restart or
 global shell alias. Reopen an existing conversation by its URL. The normal
@@ -112,8 +123,10 @@ the result, child sessions, and workspace checks.
 ## Evaluation
 
 The default fixture is a controlled two-milestone workflow: an architect
-question, an owner-authorized follow-up in the same developer session, review,
-closure, and a fresh developer. It tests communication, not spontaneous insight.
+question, an owner-authorized follow-up, review, continuation with the SAME
+developer across both milestones, and project-recorded acceptance before closure.
+`OWNER_TASK.md` is the fixture's immutable project task; a separate tracked
+completion document records the outcome. It tests communication, not insight.
 Separate authored judgment cases test implied features, wrong context,
 recurring defects, justified review, and owner escalation. Expected judgments
 stay outside the actor workspace. Results are a pilot, not a general accuracy
@@ -136,6 +149,12 @@ development does not itself authorize email, production writes, deployment,
 remote push or global settings changes. Existing native CLI instructions can
 influence behavior. No new paid API account or key is provisioned. Model settings
 are scoped to this bundle; machine-wide model defaults are unchanged.
+
+The revised project ownership, handoff and session-lifecycle instructions passed
+local launcher checks and Omnigent config validation. They have not yet been
+evaluated on a new real task. The current judgment rubric is
+[revision 2](evidence/judgment-rubric-v2.md); earlier pilot reports describe the
+previous instructions, including their then-required milestone session changes.
 
 See the [pilot report](evidence/2026-09-25-pilot.md) for the completed workflow,
 judgment results, setup limitations and cleanup. Unverified capabilities must

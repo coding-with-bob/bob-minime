@@ -28,7 +28,10 @@ def start(server='http://127.0.0.1:6767', approve_communication=False, title='Mi
         '# MiniMe coordination workspace\n\n'
         'Read CONTRACT.md. Start with conversation; no project task is assigned yet.\n'
         'The owner chooses the project during the conversation. Store coordination\n'
-        'notes in .minime/ here. Give children the exact agreed project and handoff\n'
+        'notes and task references in .minime/ here; canonical tasks, plans and\n'
+        'acceptance belong in the project under its own workflow. Keep the same\n'
+        'architect and developer for one deliverable unless replacement is justified.\n'
+        'Give children the exact agreed project and handoff\n'
         'paths, and have them use that project for commands and repo instructions.\n'
         'Do not treat this directory as the implementation repository.\n'
         'Files and handoffs are English; talk with the owner in Hungarian.\n')

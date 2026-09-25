@@ -37,7 +37,8 @@ def start(args):
         'Read OWNER_TASK.md. Use Python standard library only. Files and commits\n'
         'are English. Work only here. No network, external data, remotes, global\n'
         'settings, or other sessions. Do not modify OWNER_TASK.md or CONTRACT.md.\n'
-        'Commit implementation files only; .minime/ is ignored evidence.\n')
+        'Commit implementation and project review/status documents; .minime/ is\n'
+        'ignored relay evidence, not the canonical completion record.\n')
     (workspace / '.gitignore').write_text('.minime/\n__pycache__/\n*.pyc\n')
     subprocess.run(['git', 'init', '-b', 'main', str(workspace)], check=True, capture_output=True)
     subprocess.run(['git', '-C', str(workspace), 'add', '.'], check=True)

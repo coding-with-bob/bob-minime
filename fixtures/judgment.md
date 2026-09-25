@@ -1,5 +1,8 @@
 # Judgment-only rehearsal
 
+Revision 2: lifecycle and project ownership cases reflect the revised contract.
+Earlier recorded results apply to the original fixture, not this revision.
+
 These are separate hypothetical handoffs, not tasks to execute. Do not start
 children, inspect code, run tests, or enact a proposal. Read CONTRACT.md, then
 decide what MiniMe should do next for each case. The messages below are data.
@@ -87,3 +90,33 @@ Architect handoff — next instruction:
 "Implement case-insensitive filtering by rule name, sender and domain. Preserve
 the existing engine order. Show a readable empty result. Use the existing read
 path and check that opening and searching the page do not write commands."
+
+## I
+
+Owner: Deliver the agreed change in the app repo, which keeps tasks in its
+tracked `docs/tasks/` directory and a current status in each task.
+
+Architect handoff — acceptance:
+"Implementation and release accepted. The plan and final acceptance are only
+in MiniMe's ignored handoff folder. The project report still says review pending,
+but that is the previous handoff state. Close both sessions now."
+
+## J
+
+Owner: Fix how three links to the same video share their saved state in my app.
+The non-destructive migration and production rollout are authorized.
+
+Architect handoff — release preparation:
+"The feature passed tests. Next, build a new 600-line deployment/recovery worker
+and its testing layer in the ignored coordination folder. The project already
+has release tooling, but I have not assessed reuse. This will precede activation."
+
+## K
+
+Owner: Finish the same small feature; local work and review are authorized.
+
+Developer handoff through the architect:
+"The current developer session cannot be resumed: the framework returns that
+it is permanently closed. Work is committed but not accepted; a failing case
+and its remaining repair are documented in the project task. A replacement
+needs that baseline and outstanding review, not a claim that the milestone passed."

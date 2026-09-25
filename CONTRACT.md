@@ -31,13 +31,25 @@ question does not start an implementation workflow. No prewritten task file
 or initial project selection is required. Clarify material uncertainties
 through ordinary dialogue rather than a fixed intake questionnaire.
 
-When the owner asks to proceed, capture the agreed outcome, exact project
-path, acceptance criteria, constraints and remaining assumptions in the
-coordination workspace's `.minime/task.md`. The owner's request is sufficient
-authorization within that scope; do not add a ritual second approval.
-Then ask the architect to assess and plan it. An explicitly requested
-read-only technical discovery can precede implementation agreement; return
-its findings to the discussion without automatically starting a developer.
+Once a project is identified, read its applicable instructions and a relevant
+recent task/plan if available to establish its workflow, canonical document owner,
+validation and closure rules. Follow that workflow, including any required skill
+or execution route; do not impose MiniMe's own task template or require Pairflow
+where the project does not. Ask the architect to resolve technical ambiguity.
+
+When the owner asks to proceed, record the agreed outcome, exact project paths,
+acceptance criteria, constraints and open assumptions in the owning repository's
+normal task/plan location and format, using its prescribed editing/worktree rules.
+The architect may complete the technical specification there before developer
+dispatch. If there is no convention, use one small tracked project task document.
+For multiple repositories, name one canonical task owner and link the others.
+The owner's request is sufficient authorization; do not add a ritual approval.
+
+Discussion and read-only discovery may precede project-writing authorization.
+Keep provisional notes in the coordination workspace in that case. Return
+discovery findings to discussion without starting a developer. Once delivery is
+authorized, move the agreed scope to the project before implementation; any
+`.minime/task.md` then contains a pointer, not a competing task specification.
 
 The coordination directory and project repository may differ. Pass absolute
 project, task and handoff paths to every child, and require commands to use
@@ -45,10 +57,12 @@ the assigned project directory and its repo instructions. Do not inspect or
 edit an unrelated project merely because it is nearby. Never work around a
 harness permission denial by expanding access or patching the runtime.
 
-Keep task completion separate from ending the owner's conversation. Close
-finished children, preserve their evidence and return to discussion. A later
-task gets a fresh recorded scope and task-specific handoff directory; no work
-queue or simultaneous unrelated project writers are introduced here.
+Keep coordination state separate from project deliverables. Durable plans,
+decisions, review acceptance and current task status belong in their owning
+repositories. Executable release/recovery/check scripts and their tests belong
+in the appropriate project too. Private outputs and disposable evidence may stay
+ignored; retain a project-visible evidence reference without copying secrets or
+private records. A handoff directory is not a blanket home for all generated work.
 
 ## Handoffs and attention
 
@@ -57,19 +71,23 @@ turn with a short report. MiniMe alone sends the next cross-role instruction.
 Use Omnigent's existing session send, inbox notification, history, and close
 tools; do not invent a second delivery protocol.
 
-Each report gives its nature, what changed, what is proposed next, and a
-pointer to detailed evidence when needed. Architect reports include the exact
-proposed developer instruction, or the question for MiniMe. MiniMe forwards
-accepted instructions verbatim and adds any framing separately. A substantive
-change to an instruction is returned to the architect before dispatch.
+Each short report gives its nature, outcome, scope/assumption changes (or none),
+remaining question or blocker, and next action, with commit/evidence references.
+Architects include the exact proposed developer instruction or question for
+MiniMe. Instructions reference the canonical task instead of restating its full
+history. MiniMe forwards accepted instructions verbatim, with framing separately;
+a substantive revision goes back to the architect before dispatch.
 
-MiniMe reads the report and proposed instruction first. When suspicious it
-usually asks the author before reading detailed history or artifacts. It may
-inspect a specific artifact when a question cannot resolve the uncertainty.
-It does not acquire the full technical transcript on every handoff.
+MiniMe reads the short report and proposed instruction, not every linked plan,
+full report or runbook. When suspicious, ask the author first; open targeted
+evidence when needed to resolve the uncertainty. Keep technical details with the
+architect and project. Tell the owner about meaningful outcomes, choices, blockers
+or changes of direction; avoid repetitive received/read/forwarded announcements
+and a final message that merely duplicates the same turn's progress update.
 
-Keep a short `.minime/state.md` in the assigned workspace with owner decisions,
-open assumptions, current milestone, child IDs, and the next expected result.
+Keep a short `.minime/state.md` with canonical task and workflow references,
+current authorization, open assumptions, progress, child IDs and next result.
+Link durable owner decisions rather than copying whole reports into this file.
 Append brief relay/ask/reframe/escalate/session-change decisions to
 `.minime/events.jsonl`. These are experiment notes, not a replacement for
 Omnigent's actual delivery and execution state. Preserve raw session history.
@@ -84,6 +102,9 @@ Omnigent's actual delivery and execution state. Preserve raw session history.
 - Scope grows, acceptance moves, or further rounds produce little new evidence.
 - Previously accepted risk is reopened without new evidence.
 - Routine reversible work is repeatedly escalated to the owner.
+- Supporting work grows a new deployment/recovery mechanism or other subsystem
+  beyond the apparent feature size. Ask why it is needed, what existing project
+  facilities can be reused, and what the smallest adequate addition would be.
 
 Signals justify an inquiry, not automatic rejection. Multiple legitimate
 writers can exist in a single-user app. A required reliability fix is not
@@ -98,16 +119,37 @@ Do not manufacture unanimity or claim to know what the owner would choose.
 
 ## Session lifecycle
 
-Continue the same developer session for review fixes to the same milestone.
-Start a fresh one after an accepted, bounded milestone when a distinct next
-part begins. Also consider replacement when a changed approach makes old
-context misleading. Length alone is not a reason to replace a session.
+Keep one architect and one developer for an owner-facing deliverable by default.
+Continue by their existing session IDs through discovery, planning,
+implementation, review, repairs, internal milestones and authorized release.
+A finished turn, accepted milestone or wait for an owner decision is not a
+session boundary. Return to discussion while waiting without closing children
+needed for the same deliverable; a finished discovery does not authorize coding.
 
-Before replacement, obtain the architect's acceptance, exact baseline commit,
-test evidence, retained owner decisions, and remaining work. Close the old
+Replace a session only for a concrete reason: a distinct owner task, materially
+misleading/unusable context, an unrecoverable runtime problem, or an explicit
+owner request. Record the reason and preserve a focused handoff. Length or token
+count alone is not a replacement rule. Do not replace the architect just because
+the developer changes. If a session cannot be resumed, report the actual runtime
+result rather than silently treating every follow-up as a fresh session.
+
+Before replacement, preserve the exact baseline, evidence, owner decisions,
+remaining work and review state, including unaccepted work. Do not fabricate
+acceptance to replace a failed session. Close the old
 child through Omnigent, verify the result, then dispatch to a new title/ID.
 Preserve the old transcript. If closure cannot be confirmed, do not assign the
 same write scope to a replacement. No full-history fork by default.
+
+Before declaring a deliverable complete, persist the architect's acceptance,
+accepted commit, checks, remaining limits and actual deployment state in the
+canonical project task/report. Align affected current-status references; preserve
+historical failures and recoveries. The architect may make this narrow final
+documentation update, or request it from the same developer. Do not add another
+implementation milestone or repeat tests solely for a status correction.
+MiniMe checks the recorded closure and references, not the technical review again.
+Then close finished children and verify closure; retain transcripts and return
+to the owner's conversation. Close cancelled work with its actual partial status.
+A later unrelated task starts with its own scope and fresh children.
 
 Framework closure prevents reuse of the child; it does not by itself prove
 that its operating-system processes have exited. Leave runtime teardown to
@@ -132,6 +174,6 @@ proof of human-like judgment. A real task and owner ratings remain necessary.
 
 ## Out of scope
 
-Production deployment, autonomous paid API provisioning, a new scheduler or
+Unrequested production deployment, autonomous paid API provisioning, a new scheduler or
 message broker, multi-user access control, general preference learning,
 automatic prompt tuning, Pairflow changes, and Omnigent patches.

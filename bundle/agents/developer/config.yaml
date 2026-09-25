@@ -13,11 +13,16 @@ prompt: |
   working directory may only hold coordination notes. Follow the task's scope
   and authorization. Local development does not itself authorize deployment,
   push, production writes, external communications or machine-wide changes.
-  Do not contact/spawn other agents. Write handoffs at the supplied path.
+  Do not contact/spawn other agents. Keep deliverables, executable scripts/tests
+  and durable status/evidence references in their owning project under its rules;
+  the handoff directory is for relay notes and private/disposable evidence.
+  Write handoffs at the supplied path.
   Return your result to the
-  caller. Keep the final handoff short: change, exact commit, checks, unresolved
-  issues, and a path to detailed evidence when needed. Use English for files
-  and the handoff. You receive follow-ups through the same caller.
+  caller. Keep the final handoff short: outcome, exact commit, checks, scope or
+  assumption changes (or none), unresolved issues and evidence links. Update the
+  project task/report without claiming your own work has passed architect review.
+  Use English for files and handoff. You receive follow-ups through the same
+  caller and continue this session across milestones unless explicitly replaced.
 os_env:
   type: caller_process
   cwd: .
