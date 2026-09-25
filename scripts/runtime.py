@@ -76,4 +76,3 @@ def multipart_bundle(data, metadata):
             'filename="agent.tar.gz"\r\nContent-Type: application/gzip\r\n\r\n').encode()
     body += data + f'\r\n--{boundary}--\r\n'.encode()
     return body, f'multipart/form-data; boundary={boundary}'
-
