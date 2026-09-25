@@ -1,0 +1,46 @@
+{
+  "run": "run-04",
+  "runtime_commit": "16b310a71",
+  "final_fix_commit": "504e71b09",
+  "final_fix_addendum": "init-envelope wrapper preservation; automated regression coverage",
+  "models": {
+    "minime": "gpt-6-astra",
+    "architect": "gpt-6-astra",
+    "developer": "gpt-6-sol"
+  },
+  "reasoning_effort": "high",
+  "root_id": "session-03",
+  "initial_task_messages": 1,
+  "completion_wakes": 8,
+  "tool_counts_from_native_terminal": {
+    "sys_session_send": 8,
+    "sys_read_inbox": 8,
+    "sys_session_close": 3
+  },
+  "root_status": "idle",
+  "children": [
+    {
+      "id": "session-20",
+      "title": "developer:expense-summary-phase2",
+      "archived": true,
+      "status": "idle"
+    },
+    {
+      "id": "session-05",
+      "title": "architect:expense-summary-architect",
+      "archived": true,
+      "status": "idle"
+    },
+    {
+      "id": "session-07",
+      "title": "developer:expense-summary-phase1",
+      "archived": true,
+      "status": "idle"
+    }
+  ],
+  "final_workspace_commit": "d281b537fef971f3258067c82964c4876a2da4f9",
+  "operator_tests_passed": 20,
+  "forwarding": "all three instruction artifacts occur byte-for-byte in developer user messages (outer whitespace stripped)",
+  "operator_messages_after_initial_task": 0,
+  "judgment_claim": "controlled workflow only; no spontaneous-judgment evaluation"
+}

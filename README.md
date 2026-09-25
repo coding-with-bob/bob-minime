@@ -8,9 +8,10 @@ Read [CONTRACT.md](CONTRACT.md) for the role and authority boundaries.
 
 ## Runtime
 
-Uses stock Omnigent's Debby-style session/inbox tools and Polly's native CLI
-harness shape. No Omnigent patch, new daemon, Pairflow dependency, or bespoke
-message broker. The owner-selected configuration is:
+Uses Omnigent's Debby-style session/inbox tools and Polly's native CLI harness
+shape. The all-Codex workflow requires the parent-wake bug fix described below;
+there is no new daemon, Pairflow dependency, or bespoke message broker.
+The owner-selected configuration is:
 
 | Role | Native CLI | Model | Reasoning effort | Configuration |
 | --- | --- | --- | --- | --- |
@@ -21,16 +22,17 @@ message broker. The owner-selected configuration is:
 Models and effort are declared in each agent's `executor` block; authentication
 continues to use the existing local setup. The localhost host catalog confirms
 both model IDs and their `high` effort option. The bundle parses with these
-settings, but no model run has been performed with this configuration.
+settings. An actual Astra/Astra/Sol workflow is recorded in the
+[Codex wake validation](evidence/2026-09-25-codex-wake.md).
 
-**Autonomous workflow currently blocked:** stock Omnigent at `394fa67b8`
-suppresses the child-completion wake for a Codex-native parent. The earlier
-completed workflow used a Claude-native MiniMe with local model defaults; that
-success does not establish this Astra configuration. The launcher now preserves
-the requested all-Codex bundle and does not offer the incompatible Claude
-override. Resolve the parent-wake limitation before treating a workflow run as
-an autonomous trial. Judgment-only runs do not dispatch children and avoid this
-particular limitation. See the [pilot report](evidence/2026-09-25-pilot.md).
+**Runtime prerequisite:** the owner's normal Omnigent checkout at `394fa67b8`
+suppresses the child-completion wake for a Codex-native parent. The targeted fix
+is [upstream PR #8282](https://github.com/omnigent-ai/omnigent/pull/8282), developed
+and tested on a separate server/host. The normal server has not been upgraded.
+Use a runtime containing that fix for autonomous all-Codex workflows. The earlier
+[pilot](evidence/2026-09-25-pilot.md) used a Claude-native MiniMe; its results and
+the original Codex failure remain historical evidence. Judgment-only runs do
+not dispatch children and avoid this limitation.
 
 Requires an already running localhost Omnigent server and host with Codex
 native readiness. Do not restart or stop the shared server for this example.
@@ -43,14 +45,14 @@ global configuration or grant additional shell permissions.
 ## Run
 
 ```sh
-python3 scripts/experiment.py start --approve-communication
+python3 scripts/experiment.py start --server http://127.0.0.1:PORT --approve-communication
 python3 scripts/experiment.py status .runs/RUN/run.json
 python3 scripts/experiment.py capture .runs/RUN/run.json
 python3 scripts/experiment.py stop .runs/RUN/run.json
 ```
 
-The workflow `start` command above is the launch mechanism, not a claim that the
-Codex parent-wake limitation is resolved. `start` uploads the bundle and creates
+Replace `PORT` with a running server backed by the fixed Omnigent runtime.
+`start` uploads the bundle and creates
 a uniquely named Omnigent session; it prints the exact run path and session URL.
 Open that URL in Omnigent. **Agents** exposes the architect/developer sessions;
 **Shells** exposes their actual native CLI terminals. There is not yet a stable
