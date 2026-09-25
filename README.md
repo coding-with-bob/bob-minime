@@ -1,8 +1,15 @@
-# MiniMe: local orchestration experiment
+# MiniMe: conversation and delegated development
 
 An owner-facing intent supervisor mediates a persistent architect and ordinary
 native CLI developers. It checks necessity, context, progress, and session
 boundaries while the architect performs technical review.
+
+Start a conversation without a task file or selected project. Discuss the idea,
+then ask MiniMe to proceed when the scope is clear. It records the agreed project
+and outcome, coordinates the architect and developer, and returns to discussion
+when they finish. A technical investigation can be requested without authorizing
+implementation. Normal operation and controlled rehearsals use the same roles,
+but only rehearsals have a predefined exercise.
 
 Read [CONTRACT.md](CONTRACT.md) for the role and authority boundaries.
 
@@ -39,13 +46,45 @@ not dispatch children and avoid this limitation.
 
 Requires an already running localhost Omnigent server and host with Codex
 native readiness. Do not restart or stop the shared server for this example.
-The experiment scripts create only their own uniquely named agents/sessions.
-The owner approved four communication tools for these synthetic trials:
+The launchers create only their own sessions. The owner approved four
+communication tools for the MiniMe workflow:
 `sys_session_send`, `sys_read_inbox`, `sys_session_get_history`, `sys_session_close`.
 The explicit launch flag below applies that approval locally. It does not change
 global configuration or grant additional shell permissions.
 
-## Run
+## Start a conversation
+
+Run from this checkout:
+
+```sh
+python3 scripts/minime.py --approve-communication
+```
+
+Open the printed URL. This creates an empty **MiniMe** session; it sends no
+kickoff and starts no children. Type your first message normally. The root,
+architect and developer all support the main-pane **Chat / Terminal** switch.
+The native UI labels are presentation metadata; they do not replace the custom
+MiniMe agent or its prompt with a stock Codex agent.
+
+Each conversation has a private, ignored `.sessions/ID/workspace/` for its notes
+and a `session.json` beside it. It is not an implementation repository. Choose
+the actual repository during the conversation; MiniMe passes its absolute path
+and instructions to the children. Permission limits still apply: a denied
+project access is surfaced, not bypassed. Launching a conversation grants no
+permission to modify an arbitrary repository. Existing sessions retain their
+uploaded prompts; use a new session for an updated bundle.
+
+The launcher is the reliable entry point and requires no server restart or
+global shell alias. Reopen an existing conversation by its URL. The normal
+Omnigent New session picker may discover uploaded custom agents, but creating a
+session there does not provision this launcher's coordination directory or
+scoped communication approvals; it is not the documented startup path.
+
+The [conversation-start check](evidence/2026-09-25-conversation-start.md) exercised
+discussion without children, later selection of a separate repository, the
+complete development/review handoff, and return to discussion.
+
+## Run a controlled rehearsal
 
 ```sh
 python3 scripts/experiment.py start --approve-communication
@@ -59,8 +98,8 @@ To target a separate fixed runtime, add `--server http://127.0.0.1:PORT`.
 `start` uploads the bundle and creates
 a uniquely named Omnigent session; it prints the exact run path and session URL.
 Open that URL in Omnigent. **Agents** exposes the architect/developer sessions;
-**Shells** exposes their actual native CLI terminals. There is not yet a stable
-MiniMe template registered for starting arbitrary project work from the UI.
+**Shells** exposes their actual native CLI terminals. The main-pane **Chat /
+Terminal** switch is also enabled for the root session.
 
 The workspace and raw
 transcripts live under ignored `.runs/`. `stop` targets the run's root and its
@@ -88,14 +127,15 @@ This second command runs only hypothetical handoff assessment, without children
 or implementation. The launcher deliberately seeds a synthetic Python workspace;
 it is not yet an arbitrary-project deployment tool.
 
-## Safety and limitations
+## Scope and limitations
 
-Tasks use a synthetic disposable git repo. The routing rules are cooperative
-instructions, not security isolation between adversarial agents. No email,
-production data, deployment, remote push, or global configuration change is in
-scope. Existing native CLI instructions can influence behavior. No new paid API
-account or key is provisioned. Model settings are scoped to this bundle;
-machine-wide model defaults are unchanged.
+Rehearsals use a synthetic disposable git repo; ordinary development uses the
+project and scope agreed in the conversation. The routing rules are cooperative
+instructions, not security isolation between adversarial agents. Local
+development does not itself authorize email, production writes, deployment,
+remote push or global settings changes. Existing native CLI instructions can
+influence behavior. No new paid API account or key is provisioned. Model settings
+are scoped to this bundle; machine-wide model defaults are unchanged.
 
 See the [pilot report](evidence/2026-09-25-pilot.md) for the completed workflow,
 judgment results, setup limitations and cleanup. Unverified capabilities must

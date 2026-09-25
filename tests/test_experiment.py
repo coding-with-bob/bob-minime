@@ -2,9 +2,12 @@
 import importlib.util
 import json
 import tempfile
+import sys
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 SPEC = importlib.util.spec_from_file_location(
     'experiment', Path(__file__).resolve().parents[1] / 'scripts/experiment.py')
@@ -72,7 +75,7 @@ class ScopeTests(unittest.TestCase):
             ])
 
     def test_remote_server_is_rejected_before_network(self):
-        with patch.object(experiment.urllib.request, 'urlopen') as network:
+        with patch('urllib.request.urlopen') as network:
             with self.assertRaises(ValueError):
                 experiment.request('https://example.com', 'POST', '/v1/sessions', {})
             network.assert_not_called()

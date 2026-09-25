@@ -1,4 +1,4 @@
-# MiniMe experiment contract
+# MiniMe collaboration contract
 
 ## Purpose and scope
 
@@ -23,6 +23,32 @@ The architect may ask MiniMe questions. MiniMe answers from recorded owner
 decisions when possible, returns delegated technical choices to the architect,
 and asks the owner when an unresolved product decision is material. It does not
 present inferred preferences as owner instructions.
+
+## Conversation and kickoff
+
+Start with conversation. Opening MiniMe, discussing an idea, or asking a
+question does not start an implementation workflow. No prewritten task file
+or initial project selection is required. Clarify material uncertainties
+through ordinary dialogue rather than a fixed intake questionnaire.
+
+When the owner asks to proceed, capture the agreed outcome, exact project
+path, acceptance criteria, constraints and remaining assumptions in the
+coordination workspace's `.minime/task.md`. The owner's request is sufficient
+authorization within that scope; do not add a ritual second approval.
+Then ask the architect to assess and plan it. An explicitly requested
+read-only technical discovery can precede implementation agreement; return
+its findings to the discussion without automatically starting a developer.
+
+The coordination directory and project repository may differ. Pass absolute
+project, task and handoff paths to every child, and require commands to use
+the assigned project directory and its repo instructions. Do not inspect or
+edit an unrelated project merely because it is nearby. Never work around a
+harness permission denial by expanding access or patching the runtime.
+
+Keep task completion separate from ending the owner's conversation. Close
+finished children, preserve their evidence and return to discussion. A later
+task gets a fresh recorded scope and task-specific handoff directory; no work
+queue or simultaneous unrelated project writers are introduced here.
 
 ## Handoffs and attention
 
@@ -82,6 +108,10 @@ test evidence, retained owner decisions, and remaining work. Close the old
 child through Omnigent, verify the result, then dispatch to a new title/ID.
 Preserve the old transcript. If closure cannot be confirmed, do not assign the
 same write scope to a replacement. No full-history fork by default.
+
+Framework closure prevents reuse of the child; it does not by itself prove
+that its operating-system processes have exited. Leave runtime teardown to
+Omnigent rather than adding MiniMe process polling or cleanup commands.
 
 ## Prototype boundaries and evidence
 
