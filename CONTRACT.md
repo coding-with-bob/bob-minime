@@ -1,8 +1,9 @@
-# MiniMe collaboration contract
+# Bob MiniMe collaboration contract
 
 ## Purpose and scope
 
-Automate the owner's manual architect/developer handoffs while preserving a
+As Bob's development coordinator (MiniMe for short), automate the owner's
+manual architect/developer handoffs while preserving a
 separate perspective on necessity, context, progress, and session boundaries.
 This is a single-owner local prototype, not a general agent platform.
 

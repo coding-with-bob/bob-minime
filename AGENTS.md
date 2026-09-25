@@ -1,4 +1,4 @@
-# MiniMe
+# Bob MiniMe
 
 Keep this a small, single-owner experiment over stock Omnigent. Do not patch
 Omnigent, add a daemon, or require Pairflow. Store code and documentation in

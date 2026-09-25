@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Open a conversation-first MiniMe session on the local Omnigent host."""
+"""Open a conversation-first Bob MiniMe session on the local Omnigent host."""
 import argparse
 import json
 import shutil
@@ -10,7 +10,7 @@ from runtime import (ROOT, NATIVE_UI_LABELS, archive_bundle, communication_confi
                         launch_args, multipart_bundle, request, save)
 
 
-def start(server='http://127.0.0.1:6767', approve_communication=False, title='MiniMe'):
+def start(server='http://127.0.0.1:6767', approve_communication=False, title='Bob MiniMe'):
     request(server, 'GET', '/health')
     hosts = request(server, 'GET', '/v1/hosts')['hosts']
     ready = [host for host in hosts if host['status'] == 'online'
@@ -25,7 +25,7 @@ def start(server='http://127.0.0.1:6767', approve_communication=False, title='Mi
     (workspace / '.minime').mkdir()
     shutil.copy(ROOT / 'CONTRACT.md', workspace / 'CONTRACT.md')
     (workspace / 'AGENTS.md').write_text(
-        '# MiniMe coordination workspace\n\n'
+        '# Bob MiniMe coordination workspace\n\n'
         'Read CONTRACT.md. Start with conversation; no project task is assigned yet.\n'
         'The owner chooses the project during the conversation. Store coordination\n'
         'notes and task references in .minime/ here; canonical tasks, plans and\n'
@@ -41,9 +41,9 @@ def start(server='http://127.0.0.1:6767', approve_communication=False, title='Mi
 
     record = {'session_key': session_key, 'server': server,
               'workspace': str(workspace), 'host_id': ready[0]['host_id'],
-              'agent_name': 'minime', 'communication_preapproved': approve_communication}
+              'agent_name': 'bob-minime', 'communication_preapproved': approve_communication}
     save(directory / 'session.json', record)
-    body, content_type = multipart_bundle(archive_bundle('minime'), {
+    body, content_type = multipart_bundle(archive_bundle('bob-minime'), {
         'title': title, 'host_id': ready[0]['host_id'], 'workspace': str(workspace),
         'terminal_launch_args': launch_args('codex-native', approve_communication),
         'labels': {**NATIVE_UI_LABELS, 'minime_session': session_key},
@@ -60,7 +60,7 @@ def start(server='http://127.0.0.1:6767', approve_communication=False, title='Mi
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--server', default='http://127.0.0.1:6767')
-    parser.add_argument('--title', default='MiniMe')
+    parser.add_argument('--title', default='Bob MiniMe')
     parser.add_argument('--approve-communication', action='store_true',
                         help='Preapprove only the four owner-authorized communication tools')
     args = parser.parse_args()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Controlled MiniMe rehearsals and evidence capture over local Omnigent."""
+"""Controlled Bob MiniMe rehearsals and evidence capture over local Omnigent."""
 import argparse
 import json
 import shutil
@@ -33,7 +33,7 @@ def start(args):
     fixture = Path(args.fixture).resolve() if args.fixture else ROOT / 'fixtures/workflow.md'
     shutil.copy(fixture, workspace / 'OWNER_TASK.md')
     (workspace / 'AGENTS.md').write_text(
-        '# Disposable MiniMe trial\n\n'
+        '# Disposable Bob MiniMe trial\n\n'
         'Read OWNER_TASK.md. Use Python standard library only. Files and commits\n'
         'are English. Work only here. No network, external data, remotes, global\n'
         'settings, or other sessions. Do not modify OWNER_TASK.md or CONTRACT.md.\n'
@@ -45,7 +45,7 @@ def start(args):
     subprocess.run(['git', '-C', str(workspace), 'commit', '-m', 'chore: seed synthetic trial'],
                    check=True, capture_output=True)
     record = {'run_id': run_id, 'server': args.server, 'workspace': str(workspace),
-              'host_id': ready[0]['host_id'], 'agent_name': 'minime-trial-' + run_id,
+              'host_id': ready[0]['host_id'], 'agent_name': 'bob-minime-trial-' + run_id,
               'fixture': str(fixture), 'started_at': time.time(), 'session_ids': [],
               'communication_preapproved': args.approve_communication,
               'root_harness': args.harness}
@@ -54,7 +54,7 @@ def start(args):
     archive = archive_bundle(record['agent_name'], args.harness)
     (run_dir / 'bundle.tar.gz').write_bytes(archive)
     body, content_type = multipart_bundle(archive, {
-        'title': 'MiniMe trial ' + run_id,
+        'title': 'Bob MiniMe trial ' + run_id,
         'host_id': ready[0]['host_id'], 'workspace': str(workspace),
         'terminal_launch_args': launch_args(args.harness, args.approve_communication),
         'labels': {'minime_run': run_id, **NATIVE_UI_LABELS},

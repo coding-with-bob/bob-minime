@@ -1,4 +1,8 @@
-# MiniMe: conversation and delegated development
+# Bob MiniMe: conversation and delegated development
+
+Bob MiniMe is Bob's development coordinator: the owner's conversation partner
+and independent supervisor of architect/developer work. The repository is named
+`bob-minime`; the role is called MiniMe for short.
 
 An owner-facing intent supervisor mediates a persistent architect and an ordinary
 native CLI developer for each deliverable. It checks necessity, context, progress, and session
@@ -60,7 +64,7 @@ Run from this checkout:
 python3 scripts/minime.py --approve-communication
 ```
 
-Open the printed URL. This creates an empty **MiniMe** session; it sends no
+Open the printed URL. This creates an empty **Bob MiniMe** session; it sends no
 kickoff and starts no children. Type your first message normally. The root,
 architect and developer all support the main-pane **Chat / Terminal** switch.
 The native UI labels are presentation metadata; they do not replace the custom
@@ -73,6 +77,14 @@ and instructions to the children. Permission limits still apply: a denied
 project access is surfaced, not bypassed. Launching a conversation grants no
 permission to modify an arbitrary repository. Existing sessions retain their
 uploaded prompts; use a new session for an updated bundle.
+
+The checkout lives at `~/dev/bob-minime`. The former `~/dev/minime` path is a
+compatibility symlink to the same checkout so existing session references and
+nested worktree registrations keep resolving. It is not a second repository.
+Keep the alias while those sessions/worktrees need it; public evidence uses
+anonymized paths while private runtime artifacts retain their original paths.
+New sessions use the `bob-minime` agent name and resolved checkout path; existing
+conversations keep their original names.
 
 Once the project is known, MiniMe discovers its own planning and completion
 process. The canonical task/plan and final acceptance live in the owning repo;
