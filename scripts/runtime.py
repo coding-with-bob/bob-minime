@@ -52,7 +52,7 @@ def save(path, value):
 
 def archive_bundle(name, harness='codex-native'):
     if harness != 'codex-native':
-        raise ValueError('The pinned Astra/Sol bundle requires codex-native')
+        raise ValueError('The MiniMe parent requires codex-native')
     output = io.BytesIO()
     with tarfile.open(fileobj=output, mode='w:gz') as archive:
         for source in sorted((ROOT / 'bundle').rglob('*')):

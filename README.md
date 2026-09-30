@@ -20,7 +20,7 @@ Read [CONTRACT.md](CONTRACT.md) for the role and authority boundaries.
 ## Runtime
 
 Uses Omnigent's Debby-style session/inbox tools and Polly's native CLI harness
-shape. The all-Codex workflow requires the parent-wake bug fix described below;
+shape. The Codex MiniMe parent requires the parent-wake bug fix described below;
 there is no new daemon, Pairflow dependency, or bespoke message broker.
 The owner-selected configuration is:
 
@@ -28,15 +28,17 @@ The owner-selected configuration is:
 | --- | --- | --- | --- | --- |
 | MiniMe | Codex | `gpt-6-astra` | `high` | [bundle/config.yaml](bundle/config.yaml) |
 | Architect | Codex | `gpt-6-astra` | `high` | [architect/config.yaml](bundle/agents/architect/config.yaml) |
-| Developer | Codex | `gpt-6-sol` | `high` | [developer/config.yaml](bundle/agents/developer/config.yaml) |
+| Developer | Claude Code | `claude-opus-5-5[1m]` | `high` | [developer/config.yaml](bundle/agents/developer/config.yaml) |
 
 Models and effort are declared in each agent's `executor` block; authentication
-continues to use the existing local setup. The localhost host catalog confirms
-both model IDs and their `high` effort option. The bundle parses with these
-settings. An actual Astra/Astra/Sol workflow is recorded in the
+continues to use the existing local setup, including the Claude Code subscription
+for the developer. The September 30 host catalog lists Opus 5.5 with 1M context;
+Omnigent forwards the developer effort as `--effort high`. The updated bundle is
+parser-validated; the mixed Astra/Astra/Opus workflow has not yet been run end to
+end. The earlier Astra/Astra/Sol workflow is historical evidence in the
 [Codex wake validation](evidence/2026-09-25-codex-wake.md).
 
-**Runtime prerequisite:** autonomous all-Codex workflows need the parent-wake
+**Runtime prerequisite:** autonomous Codex-parent workflows need the parent-wake
 fix in [upstream PR #8282](https://github.com/omnigent-ai/omnigent/pull/8282).
 It is now installed locally as commit `e6f6d1c45` on branch
 `local/codex-parent-wake` of the normal Omnigent checkout, over base `394fa67b8`.
@@ -48,8 +50,8 @@ The earlier
 the original Codex failure remain historical evidence. Judgment-only runs do
 not dispatch children and avoid this limitation.
 
-Requires an already running localhost Omnigent server and host with Codex
-native readiness. Do not restart or stop the shared server for this example.
+Requires an already running localhost Omnigent server and host with both Codex
+and Claude Code native readiness. Do not restart or stop the shared server for this example.
 The launchers create only their own sessions. The owner approved four
 communication tools for the MiniMe workflow:
 `sys_session_send`, `sys_read_inbox`, `sys_session_get_history`, `sys_session_close`.
