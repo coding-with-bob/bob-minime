@@ -8,7 +8,7 @@ An owner-facing intent supervisor mediates a persistent architect and an ordinar
 native CLI developer for each deliverable. It checks necessity, context, progress, and session
 boundaries while the architect performs technical review.
 
-Start a conversation without a task file or selected project. Discuss the idea,
+Select a project directory at launch, without needing a task file. Discuss the idea,
 then ask MiniMe to proceed when the scope is clear. It records the agreed project
 and outcome, coordinates the architect and developer, and returns to discussion
 when they finish. A technical investigation can be requested without authorizing
@@ -34,8 +34,9 @@ Models and effort are declared in each agent's `executor` block; authentication
 continues to use the existing local setup, including the Claude Code subscription
 for the developer. The September 30 host catalog lists Opus 5.5 with 1M context;
 Omnigent forwards the developer effort as `--effort high`. The updated bundle is
-parser-validated; the mixed Astra/Astra/Opus workflow has not yet been run end to
-end. The earlier Astra/Astra/Sol workflow is historical evidence in the
+parser-validated; the project-start check below exercises the current mixed
+Astra/Astra/Opus configuration without a development task. The earlier
+Astra/Astra/Sol workflow is historical evidence in the
 [Codex wake validation](evidence/2026-09-25-codex-wake.md).
 
 The owner-authorized developer permission mode is `bypassPermissions`, declared
@@ -43,7 +44,7 @@ in `executor.config.permission_mode`. Omnigent translates this to Claude Code's
 `--permission-mode bypassPermissions` when creating the child session. This is
 separate from `os_env.sandbox: none` and from the parent's communication-tool
 approvals. It applies only to the developer role; task scope and authorization
-boundaries in the prompt still apply, including separate authorization for push,
+boundaries still apply, including separate authorization for push,
 deployment and external actions.
 
 Start a new MiniMe conversation to upload this updated child configuration.
@@ -73,14 +74,15 @@ The launchers create only their own sessions. The owner approved four
 communication tools for the MiniMe workflow:
 `sys_session_send`, `sys_read_inbox`, `sys_session_get_history`, `sys_session_close`.
 The explicit launch flag below applies that approval locally. It does not change
-global configuration or grant additional shell permissions.
+global configuration. This communication flag is separate from the normal
+launcher's full-access execution mode described below.
 
 ## Start a conversation
 
 Run from this checkout:
 
 ```sh
-python3 scripts/minime.py --approve-communication
+python3 scripts/minime.py --project /path/to/project --approve-communication
 ```
 
 Open the printed URL. This creates an empty **Bob MiniMe** session; it sends no
@@ -89,13 +91,37 @@ architect and developer all support the main-pane **Chat / Terminal** switch.
 The native UI labels are presentation metadata; they do not replace the custom
 MiniMe agent or its prompt with a stock Codex agent.
 
-Each conversation has a private, ignored `.sessions/ID/workspace/` for relay notes
-and a `session.json` beside it. It is not an implementation repository. Choose
-the actual repository during the conversation; MiniMe passes its absolute path
-and instructions to the children. Permission limits still apply: a denied
-project access is surfaced, not bypassed. Launching a conversation grants no
-permission to modify an arbitrary repository. Existing sessions retain their
-uploaded prompts; use a new session for an updated bundle.
+The required `--project` is an existing directory or worktree; relative paths and
+`~` are resolved before launch. MiniMe's actual working directory is this project,
+and its declared children inherit that runtime workspace. Selecting a directory
+does not authorize implementation or start children. Parallel trios can use separate existing worktrees;
+the launcher does not create branches or impose a worktree workflow.
+
+Private coordination files stay under ignored `.sessions/ID/.minime/` in this
+checkout, with `session.json` and a private contract snapshot alongside. The root
+prompt carries their absolute paths. No AGENTS.md, contract, `.codex/config.toml`
+or coordination directory is written into the project. Communication approvals
+are process-local Codex `-c` overrides for the same four tools. The normal MiniMe
+launcher uses the owner-requested full-access mode (`--ask-for-approval never
+--sandbox danger-full-access`), so its private coordination directory is writable
+without project configuration. Task authorization still bounds what it may do.
+Controlled rehearsals retain their existing workspace-write launch default.
+Global and project configuration files remain unchanged.
+
+A disposable project-start check on 2026-10-03 exercised the configured
+Astra/Astra/Opus trio: all three reported the selected project via `pwd`; both
+children independently discovered the local instruction marker and confirmed
+unchanged directories on a second turn in the same sessions. The project kept
+only its two original instruction files, and both children were closed. The test
+root was stopped and archived. This proves startup/discovery/continuation, not
+performance on a development task. The first probe failed before starting a
+thread because Codex remote mode rejects `--add-dir`; the final launcher uses
+full access and no additional-root flag. No Omnigent patch or restart was needed.
+
+
+Existing conversations retain their uploaded prompts and original working directory;
+use a new launch for these changes or an unrelated project. Reopening a session by
+URL continues its existing context. Permission limits still apply.
 
 The checkout lives at `~/dev/bob-minime`. The former `~/dev/minime` path is a
 compatibility symlink to the same checkout so existing session references and
@@ -105,16 +131,13 @@ anonymized paths while private runtime artifacts retain their original paths.
 New sessions use the `bob-minime` agent name and resolved checkout path; existing
 conversations keep their original names.
 
-Once the project is known, MiniMe discovers its own planning and completion
-process. The canonical task/plan and final acceptance live in the owning repo;
-`.minime/` keeps references and session state. The architect does technical review
-and records final acceptance in the project. Executable deployment/check scripts
-and tests belong in the project too; private output remains outside tracked files.
-
-The same architect and developer normally continue through internal milestones,
-review fixes and authorized release. Waiting for an owner answer does not close
-them or authorize more work. Replacement needs a concrete reason; completion of
-the agreed deliverable closes the children, not the owner's conversation.
+MiniMe handles coordination; the repository owns the development process.
+Durable task definitions and acceptance stay in the project, while private
+coordination notes hold references and session state. The same architect and
+developer continue through the deliverable. See [CONTRACT.md](CONTRACT.md) for
+handoffs, intervention and closure; the child prompts add only role-specific
+coordination instructions. These leaner instructions still need evaluation on
+subsequent real tasks.
 
 The launcher is the reliable entry point and requires no server restart or
 global shell alias. Reopen an existing conversation by its URL. The normal

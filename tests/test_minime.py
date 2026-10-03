@@ -15,7 +15,7 @@ SPEC.loader.exec_module(minime)
 
 
 class ConversationStartupTests(unittest.TestCase):
-    def test_empty_start_has_no_task_no_git_repository_and_main_terminal_ui(self):
+    def test_project_start_preserves_project_and_keeps_coordination_private(self):
         calls = []
 
         def api(server, method, path, data=None, content_type=None):
@@ -32,30 +32,73 @@ class ConversationStartupTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'CONTRACT.md').write_text('Conversation contract\n')
+            project = root / 'project with spaces'
+            project.mkdir()
+            (project / 'AGENTS.md').write_text('Project-owned rules\n')
+            (project / '.codex').mkdir()
+            (project / '.codex/config.toml').write_text('model = "project-choice"\n')
+            before = {str(p.relative_to(project)): p.read_bytes()
+                      for p in project.rglob('*') if p.is_file()}
             with (patch.object(minime, 'ROOT', root),
                   patch.object(minime, 'request', side_effect=api),
-                  patch.object(minime, 'archive_bundle', return_value=b'bundle'),
+                  patch.object(minime, 'archive_bundle', return_value=b'bundle') as bundle,
                   patch.object(minime, 'multipart_bundle', return_value=(b'upload', 'multipart')) as upload,
                   patch('builtins.print')):
-                record = minime.start(approve_communication=True)
+                record = minime.start(project, approve_communication=True)
 
             workspace = Path(record['workspace'])
-            self.assertFalse((workspace / 'OWNER_TASK.md').exists())
-            self.assertFalse((workspace / '.git').exists())
-            self.assertEqual(list((workspace / '.minime').iterdir()), [])
-            self.assertEqual((workspace / 'CONTRACT.md').read_text(), 'Conversation contract\n')
+            self.assertEqual(workspace, project.resolve())
+            self.assertEqual(before, {str(p.relative_to(project)): p.read_bytes()
+                                     for p in project.rglob('*') if p.is_file()})
+            self.assertFalse((project / '.minime').exists())
+            coordination = Path(record['coordination'])
+            self.assertEqual(list(coordination.iterdir()), [])
+            self.assertEqual((coordination.parent / 'CONTRACT.md').read_text(),
+                             'Conversation contract\n')
+            self.assertEqual(coordination.parent.stat().st_mode & 0o777, 0o700)
+            context = bundle.call_args.kwargs['prompt_context']
+            self.assertIn(str(coordination), context)
             metadata = upload.call_args.args[1]
             self.assertEqual(metadata['workspace'], str(workspace))
             self.assertEqual(metadata['labels']['omnigent.ui'], 'terminal')
-            self.assertEqual(metadata['labels']['omnigent.wrapper'], 'codex-native-ui')
+            args = metadata['terminal_launch_args']
+            self.assertEqual(args[args.index('--sandbox') + 1], 'danger-full-access')
+            self.assertNotIn('--add-dir', args)
+            approvals = [args[i+1] for i, arg in enumerate(args) if arg == '-c' and args[i+1].startswith('mcp_servers.')]
+            self.assertEqual(set(approvals), {
+                f'mcp_servers.omnigent.tools.{tool}.approval_mode="approve"'
+                for tool in ('sys_session_send', 'sys_read_inbox',
+                             'sys_session_get_history', 'sys_session_close')})
             self.assertEqual(calls, [('GET', '/health'), ('GET', '/v1/hosts'),
                                      ('POST', '/v1/sessions')])
-            stored = json.loads((workspace.parent / 'session.json').read_text())
+            stored = json.loads((coordination.parent / 'session.json').read_text())
             self.assertEqual(stored['root_id'], 'new-session')
-            import tomllib
-            config = tomllib.loads((workspace / '.codex/config.toml').read_text())
-            self.assertEqual(set(config['mcp_servers']['omnigent']['tools']), {
-                'sys_session_send', 'sys_read_inbox', 'sys_session_get_history', 'sys_session_close'})
+
+    def test_invalid_project_fails_before_network_or_session_creation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            file = root / 'not-a-directory'
+            file.write_text('keep')
+            with patch.object(minime, 'request') as api:
+                with self.assertRaises(FileNotFoundError):
+                    minime.start(root / 'missing')
+                with self.assertRaisesRegex(ValueError, 'existing directory'):
+                    minime.start(file)
+                api.assert_not_called()
+
+    def test_bundle_context_is_root_only_and_keeps_declared_children(self):
+        import io
+        import tarfile
+        import runtime
+        context = 'Coordination directory: "/private/run with spaces/.minime"\n'
+        with tarfile.open(fileobj=io.BytesIO(runtime.archive_bundle(
+                'bob-minime', prompt_context=context)), mode='r:gz') as archive:
+            root_prompt = archive.extractfile('config.yaml').read().decode()
+            self.assertIn('  ' + context, root_prompt)
+            for role in ('architect', 'developer'):
+                path = f'agents/{role}/config.yaml'
+                self.assertEqual(archive.extractfile(path).read(),
+                                 (runtime.ROOT / 'bundle' / path).read_bytes())
 
     def test_no_ready_host_creates_no_local_workspace_or_session(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -63,7 +106,7 @@ class ConversationStartupTests(unittest.TestCase):
             with (patch.object(minime, 'ROOT', root),
                   patch.object(minime, 'request', side_effect=[{}, {'hosts': []}]) as api):
                 with self.assertRaisesRegex(RuntimeError, 'Expected one online'):
-                    minime.start()
+                    minime.start(root)
             self.assertEqual(list(root.iterdir()), [])
             self.assertEqual([call.args[1] for call in api.call_args_list], ['GET', 'GET'])
 

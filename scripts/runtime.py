@@ -15,12 +15,16 @@ COMMUNICATION_TOOLS = ('sys_session_send', 'sys_read_inbox',
 NATIVE_UI_LABELS = {'omnigent.ui': 'terminal', 'omnigent.wrapper': 'codex-native-ui'}
 
 
-def launch_args(harness='codex-native', approve_communication=False):
+def launch_args(harness='codex-native', approve_communication=False, sandbox='workspace-write'):
     if harness == 'claude-native':
         return (['--allowedTools', ','.join('mcp__omnigent__' + tool
                                           for tool in COMMUNICATION_TOOLS)]
                 if approve_communication else [])
-    return ['--ask-for-approval', 'never', '--sandbox', 'workspace-write']
+    args = ['--ask-for-approval', 'never', '--sandbox', sandbox]
+    if approve_communication:
+        for tool in COMMUNICATION_TOOLS:
+            args += ['-c', f'mcp_servers.omnigent.tools.{tool}.approval_mode="approve"']
+    return args
 
 
 def communication_config():
@@ -50,7 +54,7 @@ def save(path, value):
     temp.replace(path)
 
 
-def archive_bundle(name, harness='codex-native'):
+def archive_bundle(name, harness='codex-native', prompt_context=None):
     if harness != 'codex-native':
         raise ValueError('The MiniMe parent requires codex-native')
     output = io.BytesIO()
@@ -62,6 +66,12 @@ def archive_bundle(name, harness='codex-native'):
             data = source.read_bytes()
             if str(relative) == 'config.yaml':
                 data = re.sub(rb'(?m)^name: .*$', f'name: {name}'.encode(), data, count=1)
+                if prompt_context:
+                    marker = b'prompt: |\n'
+                    if data.count(marker) != 1:
+                        raise ValueError('Expected one literal root prompt in the bundle')
+                    context = ''.join('  ' + line + '\n' for line in prompt_context.splitlines())
+                    data = data.replace(marker, marker + context.encode(), 1)
             info = tarfile.TarInfo(str(relative))
             info.size, info.mode = len(data), 0o644
             archive.addfile(info, io.BytesIO(data))

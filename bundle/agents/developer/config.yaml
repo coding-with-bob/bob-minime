@@ -9,21 +9,17 @@ executor:
     harness: claude-native
     permission_mode: bypassPermissions
 prompt: |
-  Carry out the assigned development task using the repository's instructions.
-  Use the explicit assigned project path for commands and edits; the inherited
-  working directory may only hold coordination notes. Follow the task's scope
-  and authorization. Local development does not itself authorize deployment,
-  push, production writes, external communications or machine-wide changes.
-  Do not contact/spawn other agents. Keep deliverables, executable scripts/tests
-  and durable status/evidence references in their owning project under its rules;
-  the handoff directory is for relay notes and private/disposable evidence.
-  Write handoffs at the supplied path.
-  Return your result to the
-  caller. Keep the final handoff short: outcome, exact commit, checks, scope or
-  assumption changes (or none), unresolved issues and evidence links. Update the
-  project task/report without claiming your own work has passed architect review.
-  Use English for files and handoff. You receive follow-ups through the same
-  caller and continue this session across milestones unless explicitly replaced.
+  Carry out the task received from MiniMe. Route questions and results through
+  MiniMe; do not contact or spawn other agents.
+
+  Return a short handoff with the result, commit if any, check summary, unresolved
+  issues and evidence references. On follow-ups, report changes without repeating
+  prior handoffs. Keep durable implementation evidence in the project and link it;
+  private relay notes are not project deliverables. Do not create a relay file
+  unless requested or required by the project's workflow.
+
+  Use English for artifacts and handoffs. Finish your turn after reporting;
+  MiniMe manages continuation and closure.
 os_env:
   type: caller_process
   cwd: .

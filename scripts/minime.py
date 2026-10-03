@@ -5,12 +5,16 @@ import json
 import shutil
 import time
 import uuid
+from pathlib import Path
 
-from runtime import (ROOT, NATIVE_UI_LABELS, archive_bundle, communication_config,
-                        launch_args, multipart_bundle, request, save)
+from runtime import (ROOT, NATIVE_UI_LABELS, archive_bundle,
+                     launch_args, multipart_bundle, request, save)
 
 
-def start(server='http://127.0.0.1:6767', approve_communication=False, title='Bob MiniMe'):
+def start(project, server='http://127.0.0.1:6767', approve_communication=False, title='Bob MiniMe'):
+    workspace = Path(project).expanduser().resolve(strict=True)
+    if not workspace.is_dir():
+        raise ValueError(f'Project must be an existing directory: {workspace}')
     request(server, 'GET', '/health')
     hosts = request(server, 'GET', '/v1/hosts')['hosts']
     ready = [host for host in hosts if host['status'] == 'online'
@@ -20,32 +24,25 @@ def start(server='http://127.0.0.1:6767', approve_communication=False, title='Bo
 
     session_key = time.strftime('%Y%m%dT%H%M%S') + '-' + uuid.uuid4().hex[:6]
     directory = ROOT / '.sessions' / session_key
-    workspace = directory / 'workspace'
-    workspace.mkdir(parents=True)
-    (workspace / '.minime').mkdir()
-    shutil.copy(ROOT / 'CONTRACT.md', workspace / 'CONTRACT.md')
-    (workspace / 'AGENTS.md').write_text(
-        '# Bob MiniMe coordination workspace\n\n'
-        'Read CONTRACT.md. Start with conversation; no project task is assigned yet.\n'
-        'The owner chooses the project during the conversation. Store coordination\n'
-        'notes and task references in .minime/ here; canonical tasks, plans and\n'
-        'acceptance belong in the project under its own workflow. Keep the same\n'
-        'architect and developer for one deliverable unless replacement is justified.\n'
-        'Give children the exact agreed project and handoff\n'
-        'paths, and have them use that project for commands and repo instructions.\n'
-        'Do not treat this directory as the implementation repository.\n'
-        'Files and handoffs are English; talk with the owner in Hungarian.\n')
-    if approve_communication:
-        (workspace / '.codex').mkdir()
-        (workspace / '.codex/config.toml').write_text(communication_config())
+    directory.mkdir(parents=True, mode=0o700)
+    coordination = directory / '.minime'
+    coordination.mkdir()
+    shutil.copy(ROOT / 'CONTRACT.md', directory / 'CONTRACT.md')
+    prompt_context = (
+        f'Read your coordination contract at {json.dumps(str(directory / "CONTRACT.md"))}.\n'
+        f'Use {json.dumps(str(coordination))} for all private coordination notes,\n'
+        'including state.md, events.jsonl and any handoffs.\n'
+    )
+    terminal_args = launch_args('codex-native', approve_communication,
+                                sandbox='danger-full-access')
 
     record = {'session_key': session_key, 'server': server,
-              'workspace': str(workspace), 'host_id': ready[0]['host_id'],
+              'workspace': str(workspace), 'coordination': str(coordination), 'host_id': ready[0]['host_id'],
               'agent_name': 'bob-minime', 'communication_preapproved': approve_communication}
     save(directory / 'session.json', record)
-    body, content_type = multipart_bundle(archive_bundle('bob-minime'), {
+    body, content_type = multipart_bundle(archive_bundle('bob-minime', prompt_context=prompt_context), {
         'title': title, 'host_id': ready[0]['host_id'], 'workspace': str(workspace),
-        'terminal_launch_args': launch_args('codex-native', approve_communication),
+        'terminal_launch_args': terminal_args,
         'labels': {**NATIVE_UI_LABELS, 'minime_session': session_key},
     })
     session = request(server, 'POST', '/v1/sessions', body, content_type)
@@ -59,12 +56,14 @@ def start(server='http://127.0.0.1:6767', approve_communication=False, title='Bo
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--project', required=True,
+                        help='Existing project directory (or worktree) used as the startup directory')
     parser.add_argument('--server', default='http://127.0.0.1:6767')
     parser.add_argument('--title', default='Bob MiniMe')
     parser.add_argument('--approve-communication', action='store_true',
                         help='Preapprove only the four owner-authorized communication tools')
     args = parser.parse_args()
-    start(args.server, args.approve_communication, args.title)
+    start(args.project, args.server, args.approve_communication, args.title)
 
 
 if __name__ == '__main__':
