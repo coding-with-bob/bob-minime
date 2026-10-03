@@ -38,6 +38,23 @@ parser-validated; the mixed Astra/Astra/Opus workflow has not yet been run end t
 end. The earlier Astra/Astra/Sol workflow is historical evidence in the
 [Codex wake validation](evidence/2026-09-25-codex-wake.md).
 
+The owner-authorized developer permission mode is `bypassPermissions`, declared
+in `executor.config.permission_mode`. Omnigent translates this to Claude Code's
+`--permission-mode bypassPermissions` when creating the child session. This is
+separate from `os_env.sandbox: none` and from the parent's communication-tool
+approvals. It applies only to the developer role; task scope and authorization
+boundaries in the prompt still apply, including separate authorization for push,
+deployment and external actions.
+
+Start a new MiniMe conversation to upload this updated child configuration.
+Existing conversations retain their uploaded bundle, and existing developer
+processes retain their own permission mode. The current Omnigent live-mode switch
+cannot enter `bypassPermissions` on a process that was not launched with it;
+changing stored launch arguments requires relaunching that developer to take
+effect. Do not restart the shared host or recreate the whole team just to change
+one child's permissions. Preserve the child's Omnigent and native session IDs
+when resuming; manually resolving an approval is also possible for the current run.
+
 **Runtime prerequisite:** autonomous Codex-parent workflows need the parent-wake
 fix in [upstream PR #8282](https://github.com/omnigent-ai/omnigent/pull/8282).
 It is now installed locally as commit `e6f6d1c45` on branch

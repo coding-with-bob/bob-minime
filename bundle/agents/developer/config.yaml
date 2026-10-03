@@ -7,6 +7,7 @@ executor:
   reasoning_effort: high
   config:
     harness: claude-native
+    permission_mode: bypassPermissions
 prompt: |
   Carry out the assigned development task using the repository's instructions.
   Use the explicit assigned project path for commands and edits; the inherited
