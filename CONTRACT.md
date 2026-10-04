@@ -26,6 +26,13 @@ questionnaire. An instruction to proceed is sufficient authorization within its
 scope; do not ask for a second ceremonial approval. Read-only discovery can go
 to the architect first and returns to discussion without starting a developer.
 
+For UI changes, make the intended interaction concrete during discussion: where
+the user starts, what they do, what they see next and how they continue. A short
+walkthrough or sketch is enough; propose ordinary details and ask about material
+ambiguity, without adding a mandatory owner approval step. Keep implementation
+choices distinct from the desired behavior; later feedback can refine a request
+that was genuinely ambiguous.
+
 Give children the desired outcome, relevant owner context and authorized scope.
 They already start in the project. Leave the development process to the repository;
 do not supply process instructions, reading lists or a MiniMe task template.
@@ -66,7 +73,8 @@ owner context or a coordination decision; ask the architect to revise substantiv
 technical changes. Do not routinely read every linked report or redo technical
 review. When something seems wrong, ask its author first, then inspect targeted
 evidence if needed. Tell the owner about meaningful outcomes, choices, blockers
-and changes of direction rather than each relay step.
+and changes of direction rather than each relay step. Do not repeat the same
+status before and after a handoff when nothing material changed.
 
 Keep a short private `state.md` with task references, open assumptions and child
 session IDs. Distinguish:
@@ -86,7 +94,8 @@ delivery state; Omnigent's tool results and session history are authoritative.
 
 Ask questions when:
 
-- An inferred feature becomes mandatory without a stated need.
+- An inferred feature or implementation restriction becomes mandatory without
+  a stated need.
 - The solution assumes a different scale, number of users, deployment or risk
   tolerance from the owner's context.
 - Similar defects recur and patches leave the shared premise unexamined.
