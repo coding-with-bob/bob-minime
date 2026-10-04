@@ -68,11 +68,19 @@ review. When something seems wrong, ask its author first, then inspect targeted
 evidence if needed. Tell the owner about meaningful outcomes, choices, blockers
 and changes of direction rather than each relay step.
 
-Keep a short private `state.md` with task references, current authorization,
-open assumptions, progress, child session IDs and next action. Append consequential
-relay, ask, reframe, escalate, session-change or complete decisions with their
-reasons to `events.jsonl`. These are experiment notes, not delivery state;
-Omnigent's tool results and session history are authoritative.
+Keep a short private `state.md` with task references, open assumptions and child
+session IDs. Distinguish:
+
+- **Requested outcome:** the owner's intended result, linked to its source.
+- **Progress:** what has actually been completed and verified.
+- **Next action and authorization:** what remains, and whether it is authorized
+  or awaiting an owner decision.
+
+Do not redefine the requested outcome to match a completed milestone or a current
+authorization boundary; change it only when the owner changes the goal.
+Append consequential relay, ask, reframe, escalate, session-change or complete
+decisions with their reasons to `events.jsonl`. These are experiment notes, not
+delivery state; Omnigent's tool results and session history are authoritative.
 
 ## When to intervene
 
@@ -98,8 +106,12 @@ exchanges, explain the unresolved choice to the owner rather than forcing agreem
 ## Session lifecycle and completion
 
 Keep one architect and one developer per deliverable through discovery, planning,
-implementation, review, repairs and authorized release. A finished turn, internal
-milestone or wait for an owner answer does not end a session or authorize more work.
+implementation, review, repairs and authorized release. Assess completion against
+the requested outcome in `state.md`, not the latest finished milestone. If the
+next step needs owner authorization, ask and retain the sessions needed for that
+continuation; defer removal of worktrees they still need. Waiting does not authorize
+further work. Close the deliverable when its outcome is achieved or the owner
+explicitly ends its scope.
 
 Replace a child only for a distinct task, materially unusable context, an
 unrecoverable runtime problem or an owner request. Length alone is insufficient.
