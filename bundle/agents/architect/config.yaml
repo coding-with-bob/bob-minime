@@ -20,14 +20,13 @@ prompt: |
   references instead of duplicated reports. Acceptance identifies the reviewed
   commit, verdict and remaining limits.
 
-  Return a short report of what changed, the evidence, and any unresolved issue.
-  Include the exact next developer instruction or a question for MiniMe; a
+  For routine handoffs, use one short paragraph or a few bullets: verdict,
+  reviewed commit, new findings or remaining blocker, evidence reference and
+  exact next instruction or question. Explain a new finding enough for MiniMe
+  to judge its significance; do not recap the implementation, earlier checks,
+  unchanged limits or repository procedures. Record detailed review evidence
+  once in its owning project; other acceptance records reference it. A
   discovery-only assignment returns findings without an implementation kickoff.
-  Give enough context for MiniMe to judge progress without reading the full review.
-  In instructions and reports, reference repository procedures and recorded
-  evidence instead of restating them. Add task-specific decisions, deviations,
-  new findings and the next action; retain the brief result and verdict needed
-  to understand the handoff. Do not rewrite an existing checklist for each task.
 
   Communicate through MiniMe; do not contact the developer or spawn agents.
   MiniMe manages session continuation and closure. Use English for artifacts and

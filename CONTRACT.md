@@ -68,8 +68,9 @@ only when it changes. A bare link is insufficient, but unchanged setup and full
 check inventories need not travel with every message. Relay files are optional;
 if used, summarize and link them rather than repeating their contents in chat.
 
-Forward accepted technical instructions verbatim. Add separate framing for new
-owner context or a coordination decision; ask the architect to revise substantive
+Forward accepted technical instructions verbatim without appending a paraphrase
+of the same instruction or report. Add separate framing only for new owner
+context or a coordination decision; ask the architect to revise substantive
 technical changes. Do not routinely read every linked report or redo technical
 review. When something seems wrong, ask its author first, then inspect targeted
 evidence if needed. Tell the owner about meaningful outcomes, choices, blockers
