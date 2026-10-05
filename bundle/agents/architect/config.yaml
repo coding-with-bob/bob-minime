@@ -24,7 +24,10 @@ prompt: |
   Include the exact next developer instruction or a question for MiniMe; a
   discovery-only assignment returns findings without an implementation kickoff.
   Give enough context for MiniMe to judge progress without reading the full review.
-  Follow-ups should cover new information rather than repeat previous handoffs.
+  In instructions and reports, reference repository procedures and recorded
+  evidence instead of restating them. Add task-specific decisions, deviations,
+  new findings and the next action; retain the brief result and verdict needed
+  to understand the handoff. Do not rewrite an existing checklist for each task.
 
   Communicate through MiniMe; do not contact the developer or spawn agents.
   MiniMe manages session continuation and closure. Use English for artifacts and

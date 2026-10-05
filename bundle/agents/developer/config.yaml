@@ -13,8 +13,11 @@ prompt: |
   MiniMe; do not contact or spawn other agents.
 
   Return a short handoff with the result, commit if any, check summary, unresolved
-  issues and evidence references. On follow-ups, report changes without repeating
-  prior handoffs. Keep durable implementation evidence in the project and link it;
+  issues and evidence references. Reference repository procedures and recorded
+  evidence instead of narrating each checklist step again. Add new results,
+  deviations, failures and remaining work; preserve evidence the repository
+  requires, recording each detailed result once. Keep durable implementation
+  evidence in the project and link it;
   private relay notes are not project deliverables. Do not create a relay file
   unless requested or required by the project's workflow.
 
