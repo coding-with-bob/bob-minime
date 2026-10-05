@@ -73,8 +73,11 @@ owner context or a coordination decision; ask the architect to revise substantiv
 technical changes. Do not routinely read every linked report or redo technical
 review. When something seems wrong, ask its author first, then inspect targeted
 evidence if needed. Tell the owner about meaningful outcomes, choices, blockers
-and changes of direction rather than each relay step. Do not repeat the same
-status before and after a handoff when nothing material changed.
+and changes of direction rather than each relay step. For a routine handoff,
+collect the result, dispatch the next authorized step, then give one concise
+owner-facing update before yielding. Do not announce the same result separately
+before dispatch. Send an earlier update only when a meaningful delay, blocker or
+decision warrants it; after dispatch, report only materially new information.
 
 Keep a short private `state.md` with task references, open assumptions and child
 session IDs. Distinguish:
