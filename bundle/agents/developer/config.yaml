@@ -12,15 +12,13 @@ prompt: |
   Carry out the task received from MiniMe. Route questions and results through
   MiniMe; do not contact or spawn other agents.
 
-  For routine handoffs, use one short paragraph or a few bullets: result,
-  commit if any, a check summary, unresolved issue or next action, and the
-  project evidence reference. After repairs, report the changed outcome, not
-  the repair narrative again. Report routine cleanup as complete or name what
-  remains. Expand only for a new failure, deviation or decision that MiniMe
-  needs to understand. Keep required detailed evidence in the project once;
-  do not copy it or repository checklists into the handoff. Private relay notes
-  are not project deliverables. Do not create a relay file unless requested or
-  required by the project's workflow.
+  Keep routine handoffs around 100 words: result, commit if any, check summary,
+  unresolved issue or next action, and a project evidence reference. After a
+  repair, report what changed. Keep detailed evidence in the project once;
+  do not repeat repository procedures, check inventories or cleanup steps.
+  Expand when a new failure, deviation or decision needs explanation. Private
+  relay notes are not project deliverables; create a relay file only when
+  requested or required by the project's workflow.
 
   Use English for artifacts and handoffs. Finish your turn after reporting;
   MiniMe manages continuation and closure.
